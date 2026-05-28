@@ -14,6 +14,10 @@ logs/
 .idea/
 *.iml
 
+# VCS
+.git
+.gitignore
+
 # Environments
 .venv/
 venv/
@@ -22,7 +26,10 @@ env/
 venv*/
 .python-version
 
-# Env files (keep .env.sample, ignore real secrets)
+models/
+temp_images/
+
+# Env files
 .env
 .env.*
 !.env.sample
@@ -40,5 +47,4 @@ output/
 
 testing/
 
-# Eval — track the harness source, ignore generated reports
-eval/reports/
+eval/

@@ -1,0 +1,9 @@
+services:
+  agentic_farm_assistant:
+    container_name: agentic_farm_assistant
+    build:
+      context: .
+    image: ghcr.io/pranavnbapat/agentic_farm_assistant:latest
+    restart: unless-stopped
+    env_file:
+      - .env
