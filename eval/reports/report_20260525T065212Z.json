@@ -1,0 +1,340 @@
+{
+  "timestamp": "2026-05-25T06:52:12.110017+00:00",
+  "model": "qwen3-30b-a3b-awq",
+  "summary": {
+    "n": 11,
+    "pass_rate": 0.909,
+    "routing_accuracy": 0.9,
+    "grounded_rate": 1.0,
+    "fabrication_cases": 0,
+    "mean_latency_ms": 4145,
+    "median_latency_ms": 4939,
+    "max_latency_ms": 7322,
+    "judge_mean": null
+  },
+  "cases": [
+    {
+      "id": "netpoulsafe",
+      "question": "Summarize NETPOULSAFE findings on poultry biosecurity",
+      "category": "euf_grounded",
+      "mode": "normal",
+      "route_class": "retrieval",
+      "grounding": "euf_supported",
+      "n_cited": 1,
+      "source_urls": [
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/36cf054c883d166efe7807a3b0eaad2d"
+      ],
+      "fabricated_urls": [],
+      "latency_ms": 5063,
+      "iterations": 0,
+      "verified": true,
+      "trimmed": false,
+      "error": null,
+      "answer_excerpt": "The NETPOULSAFE project identified that while biosecurity measures in the European poultry sector are well-known, compliance remains inconsistent across farms and countries. Key outcomes include the establishment of 7 national Agricultural Knowledge and Innovation Systems (AKIS) and a European netwo",
+      "answer_len": 1102,
+      "eval": {
+        "checks": {
+          "routing": true,
+          "grounded": true,
+          "sources_have_url": true,
+          "no_fabrication": true,
+          "answered": true
+        },
+        "passed": true
+      }
+    },
+    {
+      "id": "sheep_drones",
+      "question": "Use of drones in sheep monitoring",
+      "category": "euf_grounded",
+      "mode": "general_knowledge",
+      "route_class": "retrieval",
+      "grounding": "euf_supported",
+      "n_cited": 2,
+      "source_urls": [
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/309ba9ca5955f9926d8cd4ce4037c9f0",
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/b544c9087f590b9a374733b6e3e97306"
+      ],
+      "fabricated_urls": [],
+      "latency_ms": 6468,
+      "iterations": 0,
+      "verified": true,
+      "trimmed": false,
+      "error": null,
+      "answer_excerpt": "Drones are increasingly used in sheep farming to monitor free-ranging flocks in challenging mountainous or forested terrain, particularly in alpine regions like South Tyrol, Italy, and in Norway. Common use cases include remote visual monitoring of herd location and condition, aerial inspection of f",
+      "answer_len": 2018,
+      "eval": {
+        "checks": {
+          "routing": true,
+          "grounded": true,
+          "sources_have_url": true,
+          "no_fabrication": true,
+          "answered": true
+        },
+        "passed": true
+      }
+    },
+    {
+      "id": "biosecurity_routing",
+      "question": "What are recommended biosecurity measures for poultry farms?",
+      "category": "regression",
+      "mode": "general_knowledge",
+      "route_class": "retrieval",
+      "grounding": "euf_supported",
+      "n_cited": 5,
+      "source_urls": [
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/33a97223cf04019f5038913cd0d4559a",
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/70fda734fe8d23016b12fc35c66c381c",
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/8f40f023d5688a4b6dd2b76c02dc02f1",
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/9aa3dcd90c1e9744439ddd67f787011c",
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/cd375c9c09970f124d4873f4d99c1b54"
+      ],
+      "fabricated_urls": [],
+      "latency_ms": 5354,
+      "iterations": 0,
+      "verified": false,
+      "trimmed": false,
+      "error": null,
+      "answer_excerpt": "Recommended biosecurity measures for poultry farms include:\n\n- **Sanitary barriers and visitor control**: Implementing changing rooms, restricting access to essential personnel only, and requiring visitors to shower and wear farm-provided protective clothing to reduce disease transmission risks [4].",
+      "answer_len": 1791,
+      "eval": {
+        "checks": {
+          "routing": true,
+          "sources_have_url": true,
+          "no_fabrication": true,
+          "answered": true
+        },
+        "passed": true
+      }
+    },
+    {
+      "id": "irish_dairy_water",
+      "question": "Irish dairy water usage",
+      "category": "constraint_miss",
+      "mode": "normal",
+      "route_class": "retrieval",
+      "grounding": "general_fallback",
+      "n_cited": 0,
+      "source_urls": [],
+      "fabricated_urls": [],
+      "latency_ms": 4914,
+      "iterations": 0,
+      "verified": true,
+      "trimmed": false,
+      "error": null,
+      "answer_excerpt": "The provided sources do not contain specific information on water usage in the Irish dairy farming industry, including typical water consumption per cow, sources of water, or relevant environmental or regulatory considerations. The documents focus on biomass, animal byproducts, biogas production, an",
+      "answer_len": 656,
+      "eval": {
+        "checks": {
+          "routing": true,
+          "no_fabrication": true,
+          "answered": true
+        },
+        "passed": true
+      }
+    },
+    {
+      "id": "crop_rotation",
+      "question": "What is crop rotation?",
+      "category": "general_knowledge",
+      "mode": "general_knowledge",
+      "route_class": "retrieval",
+      "grounding": "euf_supported",
+      "n_cited": 4,
+      "source_urls": [
+        "https://organic-farmknowledge.org/tool/30580",
+        "https://organic-farmknowledge.org/tool/31134",
+        "https://organic-farmknowledge.org/tool/43653",
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/15deedd93390e2fbf5ffa4052238c4db"
+      ],
+      "fabricated_urls": [],
+      "latency_ms": 4939,
+      "iterations": 0,
+      "verified": false,
+      "trimmed": false,
+      "error": null,
+      "answer_excerpt": "Crop rotation is a farming practice in which different crops are grown in a specific, planned sequence on the same land over several growing seasons. This approach helps improve soil health by maintaining nutrient balance, preventing soil depletion, and enhancing organic matter content. By rotating ",
+      "answer_len": 969,
+      "eval": {
+        "checks": {
+          "routing": true,
+          "sources_have_url": true,
+          "no_fabrication": true,
+          "answered": true
+        },
+        "passed": true
+      }
+    },
+    {
+      "id": "joke",
+      "question": "Tell me a joke about cats",
+      "category": "off_topic",
+      "mode": "off_topic",
+      "route_class": "off_topic",
+      "grounding": "off_topic",
+      "n_cited": 0,
+      "source_urls": [],
+      "fabricated_urls": [],
+      "latency_ms": 1821,
+      "iterations": 0,
+      "verified": false,
+      "trimmed": false,
+      "error": null,
+      "answer_excerpt": "Why was the cat sitting on the computer?  \nBecause it wanted to keep an eye on the mouse! 😺",
+      "answer_len": 91,
+      "eval": {
+        "checks": {
+          "routing": true,
+          "no_sources": true,
+          "no_fabrication": true,
+          "answered": true
+        },
+        "passed": true
+      }
+    },
+    {
+      "id": "iphone",
+      "question": "Which iPhone is best?",
+      "category": "off_topic",
+      "mode": "off_topic",
+      "route_class": "off_topic",
+      "grounding": "off_topic",
+      "n_cited": 0,
+      "source_urls": [],
+      "fabricated_urls": [],
+      "latency_ms": 1522,
+      "iterations": 0,
+      "verified": false,
+      "trimmed": false,
+      "error": null,
+      "answer_excerpt": "I'm EU-FarmBook Farm Assistant, an agricultural assistant for the EU-FarmBook platform. I specialize in farming, agri-tech, and food systems support. Could you please ask about agricultural topics or EU-FarmBook features instead?",
+      "answer_len": 229,
+      "eval": {
+        "checks": {
+          "routing": true,
+          "no_sources": true,
+          "no_fabrication": true,
+          "answered": true
+        },
+        "passed": true
+      }
+    },
+    {
+      "id": "thanks",
+      "question": "Thanks, that was helpful!",
+      "category": "conversational",
+      "mode": "conversation_only",
+      "route_class": "conversational",
+      "grounding": "conversation_only",
+      "n_cited": 0,
+      "source_urls": [],
+      "fabricated_urls": [],
+      "latency_ms": 1742,
+      "iterations": 0,
+      "verified": false,
+      "trimmed": false,
+      "error": null,
+      "answer_excerpt": "You're very welcome! 😊 If you need any more help, just let me know.",
+      "answer_len": 67,
+      "eval": {
+        "checks": {
+          "routing": true,
+          "no_sources": true,
+          "no_fabrication": true,
+          "answered": true
+        },
+        "passed": true
+      }
+    },
+    {
+      "id": "capabilities",
+      "question": "What can you help me with?",
+      "category": "capability",
+      "mode": "general_knowledge",
+      "route_class": "retrieval",
+      "grounding": "euf_supported",
+      "n_cited": 5,
+      "source_urls": [
+        "https://organic-farmknowledge.org/tool/43541",
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/526ab84fae2e89ff5057424ac605b75c",
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/5394c1343ee56c28cfb3ddf75b5cc040",
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/846b490f21c4d65bfd17f5a7ee197f8d",
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/b0771b86949e5748aaf2db2e0de7fa6b"
+      ],
+      "fabricated_urls": [],
+      "latency_ms": 7322,
+      "iterations": 1,
+      "verified": false,
+      "trimmed": false,
+      "error": null,
+      "answer_excerpt": "Agricultural assistance services under the EU-FarmBook platform and related projects offer science-based, practical support across key farming domains:\n\n- **Crop Advice**: Projects like *Enhancing Plant Growth with Biostimulants* and *Cover Crop Diversification* provide evidence-based guidance on op",
+      "answer_len": 1831,
+      "eval": {
+        "checks": {
+          "routing": false,
+          "no_sources": false,
+          "sources_have_url": true,
+          "no_fabrication": true,
+          "answered": true
+        },
+        "passed": false
+      }
+    },
+    {
+      "id": "meaningless",
+      "question": "???",
+      "category": "clarify",
+      "mode": "clarification_only",
+      "route_class": "clarify",
+      "grounding": "clarification_only",
+      "n_cited": 0,
+      "source_urls": [],
+      "fabricated_urls": [],
+      "latency_ms": 1365,
+      "iterations": 0,
+      "verified": false,
+      "trimmed": false,
+      "error": null,
+      "answer_excerpt": "Please type a clear agriculture-related question.",
+      "answer_len": 49,
+      "eval": {
+        "checks": {
+          "routing": true,
+          "no_sources": true,
+          "no_fabrication": true,
+          "answered": true
+        },
+        "passed": true
+      }
+    },
+    {
+      "id": "give_sources_followup",
+      "question": "Can you give me the sources?",
+      "category": "regression",
+      "mode": "normal",
+      "route_class": "retrieval",
+      "grounding": "euf_supported",
+      "n_cited": 1,
+      "source_urls": [
+        "https://ugent-dict-farmbook-prd.s3.ugent.be/knowledge-object-prd/74b7938c897e4d341a13a2b85f205c57"
+      ],
+      "fabricated_urls": [],
+      "latency_ms": 5089,
+      "iterations": 0,
+      "verified": true,
+      "trimmed": false,
+      "error": null,
+      "answer_excerpt": "The claim that EU-FarmBook does not have Ireland-specific dairy water data is based on the absence of such data in the provided sources. None of the sources listed — including the Horizon 2020 project on sustainable grassland productivity in Europe — contain specific data on water usage in Irish dai",
+      "answer_len": 824,
+      "eval": {
+        "checks": {
+          "routing": null,
+          "sources_have_url": true,
+          "no_fabrication": true,
+          "answered": true
+        },
+        "passed": true
+      }
+    }
+  ]
+}

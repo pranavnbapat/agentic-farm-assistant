@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Farm Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/css/custom.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github.min.css" />
+</head>
+<body>
+    <div class="layout chat-layout hidden" id="app-layout">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-header">
+                    <h2>Farm Assistant</h2>
+                    <button id="new-chat">＋ New</button>
+                </div>
+                <ul id="session-list" class="session-list">
+                    <!-- Filled by JS -->
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar"></div>
+                    <div class="user-details">
+                        <span class="user-name" id="sidebar-user-name"></span>
+                        <span class="user-email" id="sidebar-user-email"></span>
+                    </div>
+                </div>
+                <button id="memory-btn" class="footer-icon-btn" title="Manage memory" aria-label="Manage memory">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a4 4 0 0 0-4 4v1a4 4 0 0 0-4 4 4 4 0 0 0 4 4v1a4 4 0 1 0 8 0v-1a4 4 0 0 0 4-4 4 4 0 0 0-4-4V7a4 4 0 0 0-4-4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button id="logout-btn" class="logout-btn" title="Logout">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Memory management modal -->
+        <div id="memory-modal" class="memory-modal hidden" aria-hidden="true" role="dialog" aria-labelledby="memory-modal-title">
+            <div class="memory-modal-backdrop" data-close-memory></div>
+            <div class="memory-modal-panel">
+                <div class="memory-modal-header">
+                    <h3 id="memory-modal-title">Memory</h3>
+                    <button type="button" class="memory-modal-close" data-close-memory aria-label="Close">×</button>
+                </div>
+                <p class="memory-modal-subtitle">
+                    Things the assistant has learned about you across conversations.
+                    Delete anything you don't want it to remember.
+                </p>
+                <div id="memory-modal-body" class="memory-modal-body">
+                    <div class="memory-empty">Loading…</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="wrap">
+            <div class="chat-shell">
+                <div id="chat" class="chat" aria-live="polite" aria-busy="false"></div>
+                <div id="uploaded-files" class="uploaded-files hidden"></div>
+
+                <form id="qform" class="composer">
+                    <input id="pdf-file" type="file" accept="application/pdf" class="hidden" />
+                    <div class="composer-inner">
+                        <button id="upload-pdf" type="button" title="Upload PDF" aria-label="Upload PDF"></button>
+                        <button id="pause-memory-btn" type="button" class="composer-icon-btn" title="Pause memory for the next message" aria-label="Pause memory" aria-pressed="false">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a4 4 0 0 0-4 4v1a4 4 0 0 0-4 4 4 4 0 0 0 4 4v1a4 4 0 1 0 8 0v-1a4 4 0 0 0 4-4 4 4 0 0 0-4-4V7a4 4 0 0 0-4-4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span class="composer-icon-strike" aria-hidden="true"></span>
+                        </button>
+                        <textarea id="question" placeholder="Ask a question…" autocomplete="off" rows="1" maxlength="4000"></textarea>
+                        <div class="composer-actions">
+                            <button id="send" type="submit" aria-label="Send message"></button>
+                        </div>
+                    </div>
+                    <input id="model" type="hidden" value="qwen3-30b-a3b-awq" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // If no token, send user back to login page
+        (function () {
+            const token = localStorage.getItem('fa_access_token');
+            if (!token) {
+                window.location.href = "/";
+            }
+        })();
+
+        (function () {
+            const input = document.getElementById('question');
+            if (!input) return;
+
+            document.addEventListener('keydown', function (e) {
+                const active = document.activeElement;
+
+                // Do nothing if user is already typing in an input/textarea/contenteditable
+                if (
+                    active &&
+                    (
+                        active.tagName === 'INPUT' ||
+                        active.tagName === 'TEXTAREA' ||
+                        active.isContentEditable
+                    )
+                ) {
+                    return;
+                }
+
+                // Ignore modifier shortcuts like Ctrl+S, Alt+something, etc.
+                if (e.ctrlKey || e.metaKey || e.altKey) {
+                    return;
+                }
+
+                // Only react to "printable" characters (letters, numbers, punctuation)
+                const isPrintable = e.key && e.key.length === 1;
+
+                // Ignore non-printable keys **except** "/"
+                if (!isPrintable && e.key !== '/') {
+                    return;
+                }
+
+                // Prevent the character from going into some random element
+                e.preventDefault();
+
+                // Focus the chat input
+                input.focus();
+
+                // If it is a printable character **and not "/"**, manually insert it
+                // so the first key the user presses is not "lost".
+                if (isPrintable && e.key !== '/') {
+                    const start = input.selectionStart ?? input.value.length;
+                    const end = input.selectionEnd ?? input.value.length;
+
+                    const before = input.value.slice(0, start);
+                    const after = input.value.slice(end);
+
+                    // Add the character that was pressed
+                    input.value = before + e.key + after;
+
+                    const newPos = start + e.key.length;
+                    input.setSelectionRange(newPos, newPos);
+
+                    // Trigger auto-resize
+                    input.style.height = 'auto';
+                    input.style.height = Math.min(input.scrollHeight, 200) + 'px';
+                }
+            });
+        })();
+
+        // FA_ENV is passed for chat.js to determine backend URLs
+        window.FA_ENV = "{{ FA_ENV }}";
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@13.0.3/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+    <script src="/static/js/voice.js"></script>
+    <script src="/static/js/chat.js"></script>
+</body>
+</html>
